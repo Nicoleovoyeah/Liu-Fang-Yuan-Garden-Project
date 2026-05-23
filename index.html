@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Liu Fang Yuan Tour</title>
+
+<style>
+body{
+margin:0;
+font-family:Arial,sans-serif;
+background:#f4f4ef;
+color:#1f2a24;
+}
+
+.title-page{
+height:100vh;
+display:flex;
+justify-content:center;
+align-items:center;
+background:
+linear-gradient(rgba(0,0,0,.45), rgba(0,0,0,.55)),
+url('garden.png');
+background-size:cover;
+background-position:center;
+}
+
+.title-card{
+background:rgba(255,255,255,.9);
+padding:50px;
+border-radius:25px;
+max-width:700px;
+width:85%;
+text-align:center;
+}
+
+.click-title{
+font-size:72px;
+font-weight:bold;
+margin:0;
+cursor:pointer;
+color:#1b4d2d;
+transition:.2s;
+}
+
+.click-title:hover{
+color:#2f7d46;
+transform:scale(1.03);
+}
+
+.subtitle{
+margin-top:20px;
+font-size:22px;
+line-height:1.5;
+color:#445;
+}
+
+.intro{
+margin-top:18px;
+line-height:1.7;
+color:#555;
+}
+
+.main-page{
+display:none;
+padding:40px 20px;
+}
+
+.main-header{
+text-align:center;
+max-width:800px;
+margin:auto auto 30px;
+}
+
+.main-header h2{
+font-size:36px;
+margin:0;
+color:#1b4d2d;
+}
+
+.main-header p{
+line-height:1.7;
+color:#555;
+margin-top:14px;
+}
+
+.garden{
+position:relative;
+max-width:1100px;
+margin:auto;
+border-radius:22px;
+overflow:hidden;
+box-shadow:0 10px 30px rgba(0,0,0,.2);
+}
+
+.garden img{
+width:100%;
+display:block;
+}
+
+.hotspot{
+position:absolute;
+width:38px;
+height:38px;
+border-radius:50%;
+background:#2f7d46;
+border:3px solid white;
+cursor:pointer;
+transform:translate(-50%,-50%);
+box-shadow:0 0 0 8px rgba(47,125,70,.25);
+}
+
+.hotspot:hover{
+transform:translate(-50%,-50%) scale(1.1);
+}
+
+.hotspot::after{
+content:"";
+position:absolute;
+inset:9px;
+background:white;
+border-radius:50%;
+}
+
+.one{left:23%;top:63%;}
+.two{left:48%;top:49%;}
+.three{left:74%;top:71%;}
+
+.popup{
+display:none;
+position:fixed;
+inset:0;
+background:rgba(0,0,0,.6);
+justify-content:center;
+align-items:center;
+padding:20px;
+z-index:100;
+}
+
+.popup-card{
+background:white;
+padding:30px;
+border-radius:20px;
+max-width:750px;
+max-height:85vh;
+overflow:auto;
+}
+
+.popup-card h2{
+margin-top:0;
+color:#1b4d2d;
+}
+
+.popup-card p{
+line-height:1.75;
+color:#333;
+}
+
+.close{
+margin-top:20px;
+padding:10px 18px;
+border:none;
+background:#2f7d46;
+color:white;
+border-radius:999px;
+cursor:pointer;
+}
+
+@media(max-width:700px){
+
+.click-title{
+font-size:52px;
+}
+
+.subtitle{
+font-size:18px;
+}
+
+}
+</style>
+</head>
+
+<body>
+
+<section class="title-page" id="titlePage">
+
+<div class="title-card">
+
+<h1 class="click-title" onclick="enterGarden()">
+Liu Fang Yuan Tour
+</h1>
+
+<p class="subtitle">
+An Interactive Herbal Journey through the Chinese Garden
+</p>
+
+<p class="intro">
+This project explores how medicinal plants, cultural memory,
+and garden space interact within Liu Fang Yuan.
+Click the title to enter the herbal garden.
+</p>
+
+</div>
+
+</section>
+
+<section class="main-page" id="mainPage">
+
+<div class="main-header">
+
+<h2>Herbal Knowledge in Liu Fang Yuan</h2>
+
+<p>
+In Chinese gardens, plants are not only decorative scenery.
+They also carry medicinal uses, symbolic meanings,
+and cultural histories.
+Click the green markers to explore the stories of three herbs.
+</p>
+
+</div>
+
+<div class="garden">
+
+<img src="garden.png">
+
+<button class="hotspot one"
+onclick="showPopup(
+'Water Chestnut / Bíqí 荸荠',
+'Water chestnut is an aquatic plant whose edible corm grows beneath mud and shallow water. In Chinese, it is also called ma ti 马蹄, or “horse hoof,” because of the shape of the corm. The plant reflects how useful herbs and foods can remain visually hidden beneath the landscape.'
+)">
+</button>
+
+<button class="hotspot two"
+onclick="showPopup(
+'Gualou 栝楼',
+'Gualou is a climbing medicinal vine discussed in Chinese materia medica traditions. Different parts of the plant — fruit, peel, seeds, and root — were classified separately in herbal knowledge. In classical herbal texts, the root was also known as tian hua fen 天花粉.'
+)">
+</button>
+
+<button class="hotspot three"
+onclick="showPopup(
+'Asian Pennywort / Jixuecao 积雪草',
+'Asian pennywort is a low-growing medicinal herb associated with clearing heat and healing practices in Chinese herbal medicine. Its modest appearance reflects how medicinal knowledge can exist quietly within the garden landscape.'
+)">
+</button>
+
+</div>
+
+</section>
+
+<div class="popup" id="popup">
+
+<div class="popup-card">
+
+<h2 id="popupTitle"></h2>
+
+<p id="popupText"></p>
+
+<button class="close" onclick="closePopup()">
+Close
+</button>
+
+</div>
+
+</div>
+
+<script>
+
+function enterGarden(){
+
+document.getElementById('titlePage').style.display='none';
+
+document.getElementById('mainPage').style.display='block';
+
+window.scrollTo(0,0);
+
+}
+
+function showPopup(title,text){
+
+document.getElementById('popupTitle').innerText=title;
+
+document.getElementById('popupText').innerText=text;
+
+document.getElementById('popup').style.display='flex';
+
+}
+
+function closePopup(){
+
+document.getElementById('popup').style.display='none';
+
+}
+
+document.getElementById('popup').addEventListener('click',function(e){
+
+if(e.target===this){
+
+closePopup();
+
+}
+
+});
+
+</script>
+
+</body>
+</html>
